@@ -7,7 +7,7 @@ permissions:
 jobs: 
   job1:
     runs-on: ubuntu-latest
-    environment: Production # TODO should fail because this client ID is set up for test
+    environment: Production # TODO should fail because this client ID is set up for test 
     outputs:
       appServiceAppName: ${{ steps.deploy.outputs.appServiceAppName }}
     steps:
