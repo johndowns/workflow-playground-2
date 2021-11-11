@@ -20,7 +20,7 @@ jobs:
       with:
         failOnStdErr: false
         deploymentName: ${{ github.run_number }}
-        resourceGroupName: ${{ inputs.resourceGroupName }}
+        resourceGroupName: Playground1
         template: ./deploy/main.bicep
 
   job2:
