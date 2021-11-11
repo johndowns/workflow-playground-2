@@ -1,1 +1,1 @@
-output appServiceAppName string = 'hiiiii'
+output appServiceAppName string = 'hiiiii with no credentials'
