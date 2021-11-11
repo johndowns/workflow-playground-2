@@ -7,7 +7,7 @@ permissions:
 jobs: 
   job1:
     runs-on: ubuntu-latest
-    environment: Test
+    #environment: Test TODO commenting this out should make the workflow fail
     outputs:
       appServiceAppName: ${{ steps.deploy.outputs.appServiceAppName }}
     steps:
