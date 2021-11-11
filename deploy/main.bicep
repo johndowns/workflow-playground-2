@@ -1,2 +1,1 @@
-
-
+output appServiceAppName string = 'hiiiii'
