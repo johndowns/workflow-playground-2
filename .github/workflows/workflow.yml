@@ -1,0 +1,32 @@
+on: 
+  push:
+    branches: 
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-application:
+    name: Build application
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Upload folder as a workflow artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: my-artifact-name
+        path: ./my-folder
+
+  another-job-download-all:
+    name: Test DL all
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/download-artifact@v2
+
+  another-job-download-single:
+    name: Test DL single
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/download-artifact@v2
+      with:
+        name: my-artifact-name
