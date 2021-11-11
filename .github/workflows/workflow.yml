@@ -1,32 +1,31 @@
-on: 
-  push:
-    branches: 
-      - main
+name: variables
+
+on:
   workflow_dispatch:
 
 jobs:
-  build-application:
-    name: Build application
+  job1:
     runs-on: ubuntu-latest
+    outputs:
+      appServiceAppName: ${{ steps.deploy.outputs.appServiceAppName }}
     steps:
     - uses: actions/checkout@v2
-
-    - name: Upload folder as a workflow artifact
-      uses: actions/upload-artifact@v2
+    - uses: azure/login@v1
+      name: Sign in to Azure
       with:
-        name: my-artifact-name
-        path: ./my-folder
-
-  another-job-download-all:
-    name: Test DL all
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/download-artifact@v2
-
-  another-job-download-single:
-    name: Test DL single
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/download-artifact@v2
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    - uses: azure/arm-deploy@v1
+      id: deploy
+      name: Deploy Bicep file
       with:
-        name: my-artifact-name
+        failOnStdErr: false
+        deploymentName: ${{ github.run_number }}
+        resourceGroupName: ${{ inputs.resourceGroupName }}
+        template: ./deploy/main.bicep
+
+  job2:
+    needs: job1
+    runs-on: ubuntu-latest
+    steps: 
+    - run: |
+        echo "${{needs.job1.outputs.appServiceAppName}}"
