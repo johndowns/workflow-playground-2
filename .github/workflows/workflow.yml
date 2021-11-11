@@ -8,6 +8,8 @@ jobs:
   job1:
     runs-on: ubuntu-latest
     environment: Test
+    outputs:
+      appServiceAppName: ${{ steps.deploy.outputs.appServiceAppName }}
     steps:
     - uses: actions/checkout@v2
     - name: Installing CLI-beta for OpenID Connect
